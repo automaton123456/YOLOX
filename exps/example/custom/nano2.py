@@ -153,7 +153,8 @@ class Exp(MyExp):
         from yolox.data import VOCDetection, ValTransform
 
         valdataset = VOCDetection(
-            data_dir=os.path.join(get_yolox_datadir(), "VOCdevkit"),
+            #data_dir=os.path.join(get_yolox_datadir(), "VOCdevkit"),
+            get_yolox_datadir(),
             image_sets=[('2007', 'test')],
             img_size=self.test_size,
             preproc=ValTransform(legacy=legacy),
