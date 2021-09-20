@@ -26,6 +26,8 @@ class Exp(MyExp):
         self.enable_mixup = False
 
         self.num_classes = 5
+        
+        self.data_num_workers = 2
 
     def get_model(self, sublinear=False):
         def init_yolo(M):
