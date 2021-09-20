@@ -1,39 +1,31 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 # Copyright (c) Megvii, Inc. and its affiliates.
-
-import os
-
-import torch.nn as nn
-
-from yolox.exp import Exp as MyExp
+# encoding: utf-8
 import os
 
 import torch
 import torch.distributed as dist
+import torch.nn as nn
 
 from yolox.data import get_yolox_datadir
+from yolox.exp import Exp as MyExp
 
 
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
-        
-        self.RES = 416
-        
+
         self.depth = 0.33
         self.width = 0.25
-        self.input_size = (self.RES, self.RES)
-        self.random_size = (10, 20)
+        self.input_size = (416, 416)
         self.mosaic_scale = (0.5, 1.5)
-        self.test_size = (self.RES, self.RES)
-        self.mosaic_prob = 0.5
-        self.enable_mixup = False
+        self.random_size = (10, 20)
+        self.test_size = (416, 416)
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
-        
+        self.enable_mixup = False
+
         self.num_classes = 5
-        
-        self.multiscale_range = 0
 
     def get_model(self, sublinear=False):
         def init_yolo(M):
@@ -52,8 +44,9 @@ class Exp(MyExp):
 
         self.model.apply(init_yolo)
         self.model.head.initialize_biases(1e-2)
-        return self.model
-      
+        return self.model        
+
+
     def get_data_loader(self, batch_size, is_distributed, no_aug=False, cache_img=False):
         from yolox.data import (
             VOCDetection,
@@ -168,4 +161,4 @@ class Exp(MyExp):
             nmsthre=self.nmsthre,
             num_classes=self.num_classes,
         )
-        return evaluator              
+        return evaluator        
