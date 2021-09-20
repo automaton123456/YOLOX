@@ -12,15 +12,20 @@ from yolox.exp import Exp as MyExp
 class Exp(MyExp):
     def __init__(self):
         super(Exp, self).__init__()
+        
+        self.RES = 416
+        
         self.depth = 0.33
         self.width = 0.25
-        self.input_size = (320, 320)
+        self.input_size = (self.RES, self.RES)
         self.random_size = (10, 20)
         self.mosaic_scale = (0.5, 1.5)
-        self.test_size = (320, 320)
+        self.test_size = self.RES, self.RES)
         self.mosaic_prob = 0.5
         self.enable_mixup = False
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
+        
+        self.num_classes = 5
 
     def get_model(self, sublinear=False):
         def init_yolo(M):
