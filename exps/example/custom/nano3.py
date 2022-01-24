@@ -69,7 +69,7 @@ class Exp(MyExp):
             dataset = VOCDetection(
                 #data_dir=os.path.join(get_yolox_datadir(), "VOCdevkit"),
                 data_dir= get_yolox_datadir(),
-                image_sets=[('2007', 'trainval')],
+                image_sets=[('2007', 'train')],
                 img_size=self.input_size,
                 preproc=TrainTransform(
                     max_labels=50,
